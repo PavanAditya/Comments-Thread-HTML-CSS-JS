@@ -13,6 +13,19 @@ const newComment = (id) => {
     `;
 }
 
+const newChildComment = (parentId, id) => {
+    return `
+    <div id="${parentId}^comment-div-${id}">
+    <textarea id="${parentId}^comment-${id}" cols="50" rows="5">${comments[id] ? comments[id].text : ''}</textarea><br />
+    <button id="${parentId}^delete-${id}" onclick="deleteComment(${id})">Delete</button>
+    <button id="${parentId}^reply-${id}" onclick="replyComment(${id})">Reply</button>
+    <button id="${parentId}^add-${id}" onclick="saveComment(${id})">${comments[id] ? 'Edit' : 'Add'}</button>
+    <br />
+    <br />
+    </div>
+    `;
+}
+
 function firstRender() {
     let commentsDiv = document.getElementById('comments');
     commentsDiv.innerHTML = '';
@@ -33,6 +46,19 @@ function appendComment() {
     commentsDiv.appendChild(newCommentDiv);
 }
 
+function appendReplyComment(id, index) {
+    let commentsDiv = document.getElementById(id);
+    let newCommentDiv = document.createElement('div');
+    newCommentDiv.style = "padding-left: 25px";
+    let commentsChildren = Object.keys(comments[index].children);
+    console.log(commentsChildren)
+    let commentIndex = commentsChildren.length + 1;
+    newCommentDiv.id = `${id}-comment-child-div-${commentIndex}`;
+    newCommentDiv.innerHTML = newChildComment(id, commentIndex);
+    commentsDiv.appendChild(newCommentDiv);
+    console.log(commentsDiv)
+}
+
 function deleteComment(id) {
     delete comments[id];
     localStorage.setItem('comments', JSON.stringify(comments));
@@ -43,9 +69,8 @@ function replyComment(id) {
     if (!comments[id]) {
         alert('Reply is not possible on this comment.');
     } else {
-        // comments[id].children = 
+        appendReplyComment(`comment-div-${id}`, id);
     }
-    firstRender();
 }
 
 function saveComment(id) {
