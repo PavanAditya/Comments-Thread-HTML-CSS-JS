@@ -14,11 +14,14 @@ Includes Features Like:
 - Replies can be nested 'n' levels deeper.
 <br />
 
-- 'Edit a Comment functionality'
+- Edit a Comment functionality
 <br />
 
-- 'Delete a comment/reply and it will also delete its nested tree completely'
+- Delete a comment/reply and it will also delete its nested tree completely
 <br />
+
+- Maintains the state of the app and restores the same data even after refresh (uses localstorage)
 
 Questions of similar pattern are found in Machiene Coding rounds of #faang interviews.
+<br />
 #faang - Facebook, Amazon, Apple, Netflix, Google Interviews.
